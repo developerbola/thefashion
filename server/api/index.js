@@ -1,1 +1,3 @@
-const server = "server";
+const { Hono } = require("hono");
+const app = new Hono();
+
