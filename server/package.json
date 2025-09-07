@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "firebase-admin": "^13.5.0",
+    "hono": "^4.9.6"
+  }
+}
