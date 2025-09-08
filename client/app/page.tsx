@@ -1,3 +1,8 @@
+import ProductForm from "./ProductForm";
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <ProductForm />
+    </div>
+  );
 }
