@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-import { handle } from "hono/vercel";
+const { handle } = require("hono/vercel");
 const { Hono } = require("hono");
 const useRoutes = require("../hooks/useRoutes");
 const useCors = require("../hooks/useCors");
