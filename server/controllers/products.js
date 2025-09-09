@@ -41,6 +41,40 @@ async function addProduct(c) {
   }
 }
 
+async function deleteProduct(c) {
+  const id = c.req.param("id");
+  try {
+    await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
+    return c.json({ message: "Product deleted succesfully" });
+  } catch (err) {
+    console.error("Delete product error:", err);
+    if (err.code === 404) {
+      return c.json({ error: "Product not found" }, 404);
+    }
+    return c.json({ error: err.message }, 500);
+  }
+}
+
+async function updateProduct(c) {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+  try {
+    const updated = await databases.updateDocument(
+      DATABASE_ID,
+      COLLECTION_ID,
+      id,
+      body
+    );
+    return c.json(updated);
+  } catch (err) {
+    console.error("Update product error", err);
+    if (err.code == 404) {
+      return c.json({ error: "Product not found" }, 404);
+    }
+    return c.json({ error: err.message }, 500);
+  }
+}
+
 async function getProducts(c) {
   try {
     const list = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
@@ -51,4 +85,4 @@ async function getProducts(c) {
   }
 }
 
-module.exports = { addProduct, getProducts };
+module.exports = { addProduct, deleteProduct, updateProduct, getProducts };
