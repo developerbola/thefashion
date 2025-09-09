@@ -1,9 +1,9 @@
-const {
-  getProducts,
+import {
   addProduct,
-  updateProduct,
   deleteProduct,
-} = require("../controllers/products");
+  getProducts,
+  updateProduct,
+} from "../controllers/products";
 
 const useRoutes = (app) => {
   app.post("/products", addProduct);
@@ -14,7 +14,6 @@ const useRoutes = (app) => {
   app.get("/", (c) => {
     return c.json({ message: "tf. backend is running." }, 200);
   });
-  
 };
 
-module.exports = useRoutes;
+export default useRoutes;

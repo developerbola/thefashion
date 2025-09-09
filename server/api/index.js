@@ -1,9 +1,11 @@
-require("dotenv").config();
+import { config as configDotenv } from "dotenv";
+configDotenv();
 
-const { handle } = require("hono/vercel");
-const { Hono } = require("hono");
-const useRoutes = require("../hooks/useRoutes");
-const useCors = require("../hooks/useCors");
+import { handle } from "hono/vercel";
+import { Hono } from "hono";
+import useRoutes from "../hooks/useRoutes.js";
+import useCors from "../hooks/useCors.js";
+
 const app = new Hono().basePath("/api");
 
 useCors(app);

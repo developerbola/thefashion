@@ -1,4 +1,4 @@
-const sdk = require("node-appwrite");
+import * as sdk from "node-appwrite";
 
 const client = new sdk.Client()
   .setEndpoint("https://fra.cloud.appwrite.io/v1")
@@ -8,4 +8,4 @@ const client = new sdk.Client()
 const databases = new sdk.Databases(client);
 const storage = new sdk.Storage(client);
 
-module.exports = { client, databases, storage };
+export { client, databases, storage };

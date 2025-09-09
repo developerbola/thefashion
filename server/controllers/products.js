@@ -1,5 +1,5 @@
-const { databases, storage } = require("../db/appwrite");
-const { nanoid } = require("nanoid");
+import { databases, storage } from "../db/appwrite.js";
+import { nanoid } from "nanoid";
 
 const DATABASE_ID = "68bd963e0029cafcaaba";
 const COLLECTION_ID = "products";
@@ -85,4 +85,4 @@ async function getProducts(c) {
   }
 }
 
-module.exports = { addProduct, deleteProduct, updateProduct, getProducts };
+export { addProduct, deleteProduct, updateProduct, getProducts };

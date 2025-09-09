@@ -1,4 +1,4 @@
-const { cors } = require("hono/cors");
+import { cors } from "hono/cors";
 
 const useCors = (app) => {
   app.use(
@@ -11,4 +11,4 @@ const useCors = (app) => {
   );
 };
 
-module.exports = useCors;
+export default useCors
