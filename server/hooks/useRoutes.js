@@ -3,7 +3,7 @@ import {
   deleteProduct,
   getProducts,
   updateProduct,
-} from "../controllers/products";
+} from "../controllers/products.js";
 
 const useRoutes = (app) => {
   app.post("/products", addProduct);
