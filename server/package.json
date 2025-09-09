@@ -1,5 +1,5 @@
 {
-  "module": "commonjs",
+  "type": "commonjs",
   "scripts": {
     "serve": "bun run --hot /api/index.js"
   },
