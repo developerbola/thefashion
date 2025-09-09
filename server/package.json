@@ -4,9 +4,11 @@
     "serve": "bun run --hot /api/index.js"
   },
   "dependencies": {
-    "dotenv": "^17.2.2",
     "hono": "^4.9.6",
     "nanoid": "^5.1.5",
     "node-appwrite": "^18.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.2"
   }
 }
