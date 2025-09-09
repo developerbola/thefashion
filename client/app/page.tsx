@@ -1,3 +1,9 @@
+import Hero from "@/sections/home/Hero";
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <div className="min-h-screen">
+      <Hero />
+    </div>
+  );
 }
