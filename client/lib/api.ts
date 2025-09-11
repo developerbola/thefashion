@@ -1,10 +1,11 @@
 import axios from "axios";
-const baseURL = "http://thefashion-s3cu.vercel.app/api";
+const baseURL = "https://thefashion-s3cu.vercel.app/api";
 
-export async function api(method: string, path: string, data = null) {
+export async function api(method: string, path: string, data?: FormData) {
   const url = `${baseURL}${path}`;
+
   const headers = {
-    "Content-Type": "application/json",
+    "Content-Type": data ? "multipart/form-data" : "application/json",
   };
 
   let axiosConfig: any = {

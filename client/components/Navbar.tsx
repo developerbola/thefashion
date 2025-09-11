@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Cart from "./Cart";
 
@@ -10,7 +9,7 @@ const Navbar = () => {
       </Link>
       <Link href={"/"}>
         <div className="bg-white p-4">
-          <Image src="/logo.svg" alt="tf. logo" width={30} height={30} />
+          <img src="/logo.svg" alt="tf. logo" className="size-[30px]" />
         </div>
       </Link>
       <Cart />

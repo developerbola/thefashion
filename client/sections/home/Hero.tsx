@@ -8,7 +8,7 @@ const Hero = () => {
           className="object-cover object-center scale-110"
         />
       </div>
-      <p className="absolute transform -translate-[50%] top-1/2 left-1/2 z-2 text-[230px] font-medium text-white">
+      <p className="absolute transform -translate-[50%] top-1/2 left-1/2 z-2 text-[200px] font-medium text-white">
         CLASSICS
       </p>
       <div className="relative w-1/2 overflow-clip">

@@ -1,16 +1,26 @@
 "use client";
 import { api } from "@/lib/api";
 import { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type OutfitType = {
   $id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
 };
 
 export default function Outfits() {
   const [outfits, setOutfits] = useState<OutfitType[]>([]);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   useEffect(() => {
     async function fetchOutfits() {
@@ -21,15 +31,77 @@ export default function Outfits() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <p>Outfits</p>
-        <div>
-          {outfits.map((i) => (
-            <div key={i.$id}>{i.name}</div>
-          ))}
+    <div className="max-w-screen pt-18 pb-[300px]">
+      <Carousel
+        setApi={setCarouselApi}
+        className="p-10"
+        opts={{
+          align: "start",
+          slidesToScroll: 1,
+        }}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-[40px] font-semibold">Outfits</p>
+
+          <div className="flex items-center gap-5">
+            <Link
+              href={"/shop?category=outfits"}
+              className="text-3xl font-semibold whitespace-nowrap"
+            >
+              View All
+            </Link>
+            <div className="flex items-center">
+              <button
+                className="cursor-pointer"
+                onClick={() => carouselApi?.scrollPrev()}
+              >
+                <ArrowLeft size={40} />
+              </button>
+              <button
+                className="cursor-pointer"
+                onClick={() => carouselApi?.scrollNext()}
+              >
+                <ArrowRight size={40} />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <CarouselContent className="-ml-4">
+          {outfits?.length > 0
+            ? outfits.map((i, _) => (
+                <CarouselItem
+                  key={i.$id}
+                  className="md:basis-1/2 lg:basis-1/3 pl-4"
+                >
+                  <div className="relative p-4 grid place-items-center bg-[#fafafa] cursor-pointer">
+                    <div className="absolute p-4 flex flex-col justify-between h-full w-full">
+                      <div className="flex justify-between">
+                        <p className="text-xl font-medium">CLASSICS</p>
+                        <p className="text-xl font-medium">${i.price}</p>
+                      </div>
+                      <div className="w-full">
+                        <p className="text-2xl font-semibold">{i.name}</p>
+                      </div>
+                    </div>
+                    <img
+                      src={i.imageUrl}
+                      alt={i.name}
+                      className="w-auto h-[85%]"
+                    />
+                  </div>
+                </CarouselItem>
+              ))
+            : [1, 2, 3].map((i) => (
+                <CarouselItem
+                  key={i}
+                  className="md:basis-1/2 lg:basis-1/3 pl-4"
+                >
+                  <Skeleton className="w-full h-[400px] rounded-xl" />
+                </CarouselItem>
+              ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 }
