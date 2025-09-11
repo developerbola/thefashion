@@ -4,11 +4,16 @@ const useCors = (app) => {
   app.use(
     "/*",
     cors({
-      origin: ["http://localhost:3001", "https://thefashion.vercel.app"],
+      origin: [
+        "http://localhost:3000/",
+        "http://localhost:3000",
+        "https://thefashion.vercel.app/",
+        "https://thefashion.vercel.app",
+      ],
       allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       allowHeaders: ["Content-Type", "Authorization"],
     })
   );
 };
 
-export default useCors
+export default useCors;
