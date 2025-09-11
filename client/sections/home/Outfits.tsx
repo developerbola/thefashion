@@ -97,7 +97,7 @@ export default function Outfits() {
                   key={i}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <Skeleton className="w-full h-[400px] rounded-xl" />
+                  <Skeleton className="w-full h-[442px]" />
                 </CarouselItem>
               ))}
         </CarouselContent>
