@@ -1,4 +1,6 @@
 import axios from "axios";
+import type { AxiosRequestConfig } from "axios";
+
 const baseURL = "https://thefashion-s3cu.vercel.app/api";
 
 export async function api(method: string, path: string, data?: FormData) {
@@ -8,7 +10,7 @@ export async function api(method: string, path: string, data?: FormData) {
     "Content-Type": data ? "multipart/form-data" : "application/json",
   };
 
-  let axiosConfig: any = {
+  let axiosConfig: AxiosRequestConfig = {
     method: method.toLowerCase(),
     url,
     headers,
