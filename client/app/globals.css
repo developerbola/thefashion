@@ -82,3 +82,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+*::selection{
+  background: oklch(62.3% 0.214 259.815);
+  color: white;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
