@@ -10,7 +10,7 @@ export async function api(method: string, path: string, data?: FormData) {
     "Content-Type": data ? "multipart/form-data" : "application/json",
   };
 
-  let axiosConfig: AxiosRequestConfig = {
+  const axiosConfig: AxiosRequestConfig = {
     method: method.toLowerCase(),
     url,
     headers,
