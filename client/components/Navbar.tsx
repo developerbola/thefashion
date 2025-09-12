@@ -4,7 +4,7 @@ import Cart from "./Cart";
 const Navbar = () => {
   return (
     <div className="fixed bg-white h-16 w-full px-8 flex items-center justify-between z-10">
-      <Link href={"/shop"} className="font-semibold text-2xl">
+      <Link href={"/shop"} className="font-semibold text-xl md:text-2xl">
         SHOP ALL
       </Link>
       <Link href={"/"}>

@@ -31,7 +31,7 @@ export default function Outfits() {
   }, []);
 
   return (
-    <div className="max-w-screen pt-18 pb-[300px]">
+    <div className="pt-5 md:pt-18 pb-[300px]">
       <Carousel
         setApi={setCarouselApi}
         className="p-10"
@@ -41,27 +41,29 @@ export default function Outfits() {
         }}
       >
         <div className="flex items-center justify-between mb-4">
-          <p className="text-[40px] font-semibold">Outfits</p>
+          <p className="text-2xl md:text-3xl lg:text-[40px] font-semibold">
+            Outfits
+          </p>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3 md:gap-5">
             <Link
               href={"/shop?category=outfits"}
-              className="text-3xl font-semibold whitespace-nowrap"
+              className="text-lg md:text-2xl lg:text-3xl font-semibold whitespace-nowrap"
             >
               View All
             </Link>
             <div className="flex items-center">
               <button
-                className="cursor-pointer"
+                className="cursor-pointer hover:text-blue-500"
                 onClick={() => carouselApi?.scrollPrev()}
               >
-                <ArrowLeft size={40} />
+                <ArrowLeft className="md:size-[35px]" />
               </button>
               <button
-                className="cursor-pointer"
+                className="cursor-pointer hover:text-blue-500"
                 onClick={() => carouselApi?.scrollNext()}
               >
-                <ArrowRight size={40} />
+                <ArrowRight className="md:size-[35px]" />
               </button>
             </div>
           </div>
@@ -77,11 +79,17 @@ export default function Outfits() {
                   <div className="relative p-4 grid place-items-center bg-[#fafafa] cursor-pointer">
                     <div className="absolute p-4 flex flex-col justify-between h-full w-full">
                       <div className="flex justify-between">
-                        <p className="text-xl font-medium">CLASSICS</p>
-                        <p className="text-xl font-medium">${i.price}</p>
+                        <p className="text-base md:text-xl font-medium">
+                          CLASSICS
+                        </p>
+                        <p className="text-base md:text-xl font-medium">
+                          ${i.price}
+                        </p>
                       </div>
                       <div className="w-full">
-                        <p className="text-2xl font-semibold">{i.name}</p>
+                        <p className="text-lg md:text-2xl font-semibold">
+                          {i.name}
+                        </p>
                       </div>
                     </div>
                     <img

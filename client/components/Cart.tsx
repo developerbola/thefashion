@@ -11,7 +11,7 @@ const Cart = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <div className="font-semibold text-2xl cursor-pointer">
+        <div className="font-semibold text-xl md:text-2xl cursor-pointer">
           CART{" [0]"}
         </div>
       </SheetTrigger>
