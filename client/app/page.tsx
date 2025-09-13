@@ -1,6 +1,7 @@
 import Hero from "@/sections/home/Hero";
 import Outfits from "@/sections/home/Outfits";
 import Showcase from "@/sections/home/Showcase";
+import Watches from "@/sections/home/Watches";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Outfits />
       <Showcase />
+      <Watches />
     </div>
   );
 }

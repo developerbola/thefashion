@@ -19,16 +19,16 @@ export type ProductType = {
   imageUrl: string;
 };
 
-export default function Outfits() {
-  const [outfits, setOutfits] = useState<ProductType[]>([]);
+export default function Watches() {
+  const [watches, setWatches] = useState<ProductType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   useEffect(() => {
-    async function fetchOutfits() {
-      const res = await api("get", "/outfits");
-      setOutfits(res);
+    async function fetchWatches() {
+      const res = await api("get", "/watches");
+      setWatches(res);
     }
-    fetchOutfits();
+    fetchWatches();
   }, []);
 
   return (
@@ -43,7 +43,7 @@ export default function Outfits() {
       >
         <div className="flex items-center justify-between mb-4">
           <p className="text-2xl md:text-3xl lg:text-[40px] font-semibold">
-            Outfits
+            Watches
           </p>
 
           <div className="flex items-center gap-3 md:gap-5">
@@ -71,8 +71,8 @@ export default function Outfits() {
         </div>
 
         <CarouselContent className="-ml-4">
-          {outfits?.length > 0
-            ? outfits.map((i, _) => (
+          {watches?.length > 0
+            ? watches.map((i, _) => (
                 <CarouselItem
                   key={i.$id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
