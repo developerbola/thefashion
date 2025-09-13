@@ -1,7 +1,6 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -15,14 +14,13 @@ const Cart = () => {
           CART{" [0]"}
         </div>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="!max-w-[500px] !w-[500px]">
         <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </SheetDescription>
+          <SheetTitle className="text-3xl">Your Cart</SheetTitle>
         </SheetHeader>
+        <div className="flex items-center justify-center h-full w-full">
+          <p>No items found</p>
+        </div>
       </SheetContent>
     </Sheet>
   );

@@ -10,8 +10,9 @@ import {
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import ProductCard from "@/components/ProductCard";
 
-type OutfitType = {
+export type ProductType = {
   $id: number;
   name: string;
   price: number;
@@ -19,7 +20,7 @@ type OutfitType = {
 };
 
 export default function Outfits() {
-  const [outfits, setOutfits] = useState<OutfitType[]>([]);
+  const [outfits, setOutfits] = useState<ProductType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function Outfits() {
   }, []);
 
   return (
-    <div className="pt-5 md:pt-18 pb-[300px]">
+    <div className="pt-5 md:pt-18 pb-[100px]">
       <Carousel
         setApi={setCarouselApi}
         className="p-10"
@@ -48,7 +49,7 @@ export default function Outfits() {
           <div className="flex items-center gap-3 md:gap-5">
             <Link
               href={"/shop?category=outfits"}
-              className="text-lg md:text-2xl lg:text-3xl font-semibold whitespace-nowrap"
+              className="text-lg md:text-2xl lg:text-3xl font-semibold whitespace-nowrap hover:text-blue-500"
             >
               View All
             </Link>
@@ -76,28 +77,7 @@ export default function Outfits() {
                   key={i.$id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <div className="relative p-4 grid place-items-center bg-[#fafafa] cursor-pointer">
-                    <div className="absolute p-4 flex flex-col justify-between h-full w-full">
-                      <div className="flex justify-between">
-                        <p className="text-base md:text-xl font-medium">
-                          CLASSICS
-                        </p>
-                        <p className="text-base md:text-xl font-medium">
-                          ${i.price}
-                        </p>
-                      </div>
-                      <div className="w-full">
-                        <p className="text-lg md:text-2xl font-semibold">
-                          {i.name}
-                        </p>
-                      </div>
-                    </div>
-                    <img
-                      src={i.imageUrl}
-                      alt={i.name}
-                      className="w-auto h-[85%]"
-                    />
-                  </div>
+                  <ProductCard item={i} />
                 </CarouselItem>
               ))
             : [1, 2, 3].map((i) => (
