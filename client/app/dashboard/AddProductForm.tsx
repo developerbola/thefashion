@@ -21,9 +21,11 @@ export default function AddProductForm() {
     formData.append("image", image);
 
     try {
-      await api("post", "/products", formData);
+      await api("post", "/watches", formData);
     } catch (err) {
       console.error("Add product error:", err);
+    } finally {
+      alert("added");
     }
   };
 
