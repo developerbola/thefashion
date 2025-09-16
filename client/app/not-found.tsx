@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const NotFound = () => {
   return (
-    <div className="grid place-items-center w-full h-screen">
+    <div className="grid place-items-center w-full h-[calc(100vh-64px)]">
       <div className="flex items-center gap-2 text-3xl">
         There is no page{" "}
         <Link href={"/"}>

@@ -77,7 +77,9 @@ export default function Outfits() {
                   key={i.$id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <ProductCard item={i} />
+                  <Link href={"/product/" + i.name.toLowerCase()}>
+                    <ProductCard item={i} />
+                  </Link>
                 </CarouselItem>
               ))
             : [1, 2, 3].map((i) => (
