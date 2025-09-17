@@ -48,7 +48,7 @@ export default function Watches() {
 
           <div className="flex items-center gap-3 md:gap-5">
             <Link
-              href={"/shop?category=outfits"}
+              href={"/shop/watches"}
               className="text-lg md:text-2xl lg:text-3xl font-semibold whitespace-nowrap hover:text-blue-500"
             >
               View All
@@ -77,7 +77,11 @@ export default function Watches() {
                   key={i.$id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <ProductCard item={i} />
+                  <Link
+                    href={"/watch/" + i.name.toLowerCase().split(" ").join("-")}
+                  >
+                    <ProductCard item={i} />
+                  </Link>
                 </CarouselItem>
               ))
             : [1, 2, 3].map((i) => (
@@ -85,7 +89,7 @@ export default function Watches() {
                   key={i}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <Skeleton className="w-full h-[442px]" />
+                  <Skeleton className="w-full h-[530px]" />
                 </CarouselItem>
               ))}
         </CarouselContent>

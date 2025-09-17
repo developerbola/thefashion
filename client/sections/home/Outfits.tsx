@@ -1,6 +1,7 @@
 "use client";
+
 import { api } from "@/lib/api";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import {
   Carousel,
   CarouselApi,
@@ -11,6 +12,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/ProductCard";
+import { useState } from "react";
 
 export type ProductType = {
   $id: number;
@@ -19,17 +21,27 @@ export type ProductType = {
   imageUrl: string;
 };
 
+const fetcher = (url: string) => api("get", url);
+
 export default function Outfits() {
-  const [outfits, setOutfits] = useState<ProductType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
-  useEffect(() => {
-    async function fetchOutfits() {
-      const res = await api("get", "/outfits");
-      setOutfits(res);
-    }
-    fetchOutfits();
-  }, []);
+  const {
+    data: outfits,
+    error,
+    isLoading,
+  } = useSWR<ProductType[]>("/outfits", fetcher, {
+    dedupingInterval: 1000 * 60 * 5,
+    revalidateOnFocus: false,
+  });
+
+  if (error) {
+    return (
+      <div className="p-[100px] w-full flex justify-center">
+        <p className="self-center">An error accured during fetch outfits.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-5 md:pt-18 pb-[100px]">
@@ -48,7 +60,7 @@ export default function Outfits() {
 
           <div className="flex items-center gap-3 md:gap-5">
             <Link
-              href={"/shop?category=outfits"}
+              href={"/shop/outfits"}
               className="text-lg md:text-2xl lg:text-3xl font-semibold whitespace-nowrap hover:text-blue-500"
             >
               View All
@@ -71,23 +83,27 @@ export default function Outfits() {
         </div>
 
         <CarouselContent className="-ml-4">
-          {outfits?.length > 0
-            ? outfits.map((i, _) => (
-                <CarouselItem
-                  key={i.$id}
-                  className="md:basis-1/2 lg:basis-1/3 pl-4"
-                >
-                  <Link href={"/product/" + i.name.toLowerCase()}>
-                    <ProductCard item={i} />
-                  </Link>
-                </CarouselItem>
-              ))
-            : [1, 2, 3].map((i) => (
+          {isLoading
+            ? [1, 2, 3].map((i) => (
                 <CarouselItem
                   key={i}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
                   <Skeleton className="w-full h-[442px]" />
+                </CarouselItem>
+              ))
+            : outfits?.map((i) => (
+                <CarouselItem
+                  key={i.$id}
+                  className="md:basis-1/2 lg:basis-1/3 pl-4"
+                >
+                  <Link
+                    href={
+                      "/outfit/" + i.name.toLowerCase().split(" ").join("-")
+                    }
+                  >
+                    <ProductCard item={i} />
+                  </Link>
                 </CarouselItem>
               ))}
         </CarouselContent>
