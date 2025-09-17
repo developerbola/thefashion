@@ -2,6 +2,7 @@ import {
   addProduct,
   deleteProduct,
   getProducts,
+  getSingleProduct,
   updateProduct,
 } from "../controllers/outfits.js";
 
@@ -18,6 +19,7 @@ const useRoutes = (app) => {
   app.put("/outfits/:id", updateProduct);
   app.delete("/outfits/:id", deleteProduct);
   app.get("/outfits", getProducts);
+  app.get("/outfits/:name", getSingleProduct);
 
   // Watches
   app.post("/watches", addWatch);

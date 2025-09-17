@@ -17,7 +17,6 @@ async function addProduct(c) {
       return c.json({ error: "Name, price, and image are required" }, 400);
     }
 
-    // Upload image to Appwrite storage
     const uploadedFile = await storage.createFile(
       BUCKET_ID,
       `product-${nanoid()}`,
@@ -26,7 +25,6 @@ async function addProduct(c) {
 
     const imageUrl = `https://fra.cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${uploadedFile.$id}/view?project=${process.env.APPWRITE_PROJECT_ID}`;
 
-    // Create product document
     const doc = await databases.createDocument(
       DATABASE_ID,
       COLLECTION_ID,
@@ -47,7 +45,7 @@ async function deleteProduct(c) {
     await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
     return c.json({ message: "Product deleted succesfully" });
   } catch (err) {
-    console.error("Delete product error:", err);
+    console.error("Delete product error: ", err);
     if (err.code === 404) {
       return c.json({ error: "Product not found" }, 404);
     }
@@ -67,7 +65,7 @@ async function updateProduct(c) {
     );
     return c.json(updated);
   } catch (err) {
-    console.error("Update product error", err);
+    console.error("Update product error: ", err);
     if (err.code == 404) {
       return c.json({ error: "Product not found" }, 404);
     }
@@ -80,9 +78,32 @@ async function getProducts(c) {
     const list = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
     return c.json(list.documents);
   } catch (err) {
-    console.error("Get products error:", err);
+    console.error("Get products error: ", err);
     return c.json({ error: err.message }, 500);
   }
 }
 
-export { addProduct, deleteProduct, updateProduct, getProducts };
+export async function getSingleProduct(c) {
+  try {
+    const name = c.req.param("name");
+
+    const product = await databases.getDocument(
+      DATABASE_ID,
+      COLLECTION_ID,
+      name
+    );
+
+    return c.json(product, 200);
+  } catch (err) {
+    console.error("Get single product error: ", err);
+    return c.json({ error: "Product not found" }, 404);
+  }
+}
+
+export {
+  addProduct,
+  deleteProduct,
+  updateProduct,
+  getProducts,
+  getSingleProduct,
+};
