@@ -9,6 +9,7 @@ import {
 import {
   addWatch,
   deleteWatch,
+  getSingleWatch,
   getWatches,
   updateWatch,
 } from "../controllers/watches.js";
@@ -26,6 +27,7 @@ const useRoutes = (app) => {
   app.put("/watches/:id", updateWatch);
   app.delete("/watches/:id", deleteWatch);
   app.get("/watches", getWatches);
+  app.get("/watches/:name", getSingleWatch);
 
   app.get("/", (c) => {
     return c.json({ message: "tf. backend is running." }, 200);

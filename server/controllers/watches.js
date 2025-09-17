@@ -83,4 +83,17 @@ async function getWatches(c) {
   }
 }
 
-export { addWatch, deleteWatch, updateWatch, getWatches };
+async function getSingleWatch(c) {
+  try {
+    const name = c.req.param("name");
+
+    const watch = await databases.getDocument(DATABASE_ID, COLLECTION_ID, name);
+
+    return c.json(watch, 200);
+  } catch (err) {
+    console.error("Get single watch error: ", err);
+    return c.json({ error: "Watch not found" }, 404);
+  }
+}
+
+export { addWatch, deleteWatch, updateWatch, getWatches, getSingleWatch };

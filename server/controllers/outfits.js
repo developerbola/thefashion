@@ -83,7 +83,7 @@ async function getProducts(c) {
   }
 }
 
-export async function getSingleProduct(c) {
+async function getSingleProduct(c) {
   try {
     const name = c.req.param("name");
 
