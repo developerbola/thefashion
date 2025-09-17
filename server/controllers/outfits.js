@@ -1,7 +1,7 @@
 import { databases, storage } from "../db/appwrite.js";
 
 const DATABASE_ID = "68bd963e0029cafcaaba";
-const COLLECTION_ID = "outfits";
+const COLLECTION_ID = "products";
 const BUCKET_ID = "68bd93ed002a08ae0fd0";
 import { Query } from "node-appwrite";
 
