@@ -3,10 +3,11 @@
   "workspaces": {
     "": {
       "dependencies": {
-        "dotenv": "^17.2.2",
         "hono": "^4.9.6",
-        "nanoid": "^5.1.5",
         "node-appwrite": "^18.0.0",
+      },
+      "devDependencies": {
+        "dotenv": "^17.2.2",
       },
     },
   },
@@ -14,8 +15,6 @@
     "dotenv": ["dotenv@17.2.2", "", {}, "sha512-Sf2LSQP+bOlhKWWyhFsn0UsfdK/kCWRv1iuA2gXAwt3dyNabr6QSj00I2V10pidqz69soatm9ZwZvpQMTIOd5Q=="],
 
     "hono": ["hono@4.9.6", "", {}, "sha512-doVjXhSFvYZ7y0dNokjwwSahcrAfdz+/BCLvAMa/vHLzjj8+CFyV5xteThGUsKdkaasgN+gF2mUxao+SGLpUeA=="],
-
-    "nanoid": ["nanoid@5.1.5", "", { "bin": { "nanoid": "bin/nanoid.js" } }, "sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw=="],
 
     "node-appwrite": ["node-appwrite@18.0.0", "", { "dependencies": { "node-fetch-native-with-agent": "1.7.2" } }, "sha512-2S0T17H2Gm5ZcdInCmHk8Pc8P6mKW8cDCoSBNF3PYGxbKjT51V/HY/2n6IPRqk2HrHPySmx3JIMN+V6QBprqAw=="],
 

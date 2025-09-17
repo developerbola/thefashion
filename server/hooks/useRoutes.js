@@ -1,9 +1,9 @@
 import {
-  addProduct,
-  deleteProduct,
-  getProducts,
-  getSingleProduct,
-  updateProduct,
+  addOutfit,
+  deleteOutfit,
+  getOutfits,
+  getSingleOutfit,
+  updateOutfit,
 } from "../controllers/outfits.js";
 
 import {
@@ -16,11 +16,11 @@ import {
 
 const useRoutes = (app) => {
   // Outfits
-  app.post("/outfits", addProduct);
-  app.put("/outfits/:id", updateProduct);
-  app.delete("/outfits/:id", deleteProduct);
-  app.get("/outfits", getProducts);
-  app.get("/outfits/:name", getSingleProduct);
+  app.post("/outfits", addOutfit);
+  app.put("/outfits/:id", updateOutfit);
+  app.delete("/outfits/:id", deleteOutfit);
+  app.get("/outfits", getOutfits);
+  app.get("/outfits/:name", getSingleOutfit);
 
   // Watches
   app.post("/watches", addWatch);

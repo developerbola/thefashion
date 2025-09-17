@@ -1,5 +1,5 @@
+import { Query } from "node-appwrite";
 import { databases, storage } from "../db/appwrite.js";
-import { nanoid } from "nanoid";
 
 const DATABASE_ID = "68bd963e0029cafcaaba";
 const COLLECTION_ID = "watches";
@@ -11,15 +11,22 @@ async function addWatch(c) {
     const name = form.get("name");
     const price = parseFloat(form.get("price"));
     const file = form.get("image");
-    console.log(form);
 
     if (!name || !price || !file) {
       return c.json({ error: "Name, price, and image are required" }, 400);
     }
 
+    const existing = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
+      Query.equal("name", name),
+    ]);
+
+    if (existing.total > 0) {
+      return c.json({ error: "Watch with this name is already exists" });
+    }
+
     const uploadedFile = await storage.createFile(
       BUCKET_ID,
-      `watch-${nanoid()}`,
+      `watch-${name}`,
       file
     );
 
