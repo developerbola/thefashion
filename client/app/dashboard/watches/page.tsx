@@ -15,8 +15,10 @@ import { api } from "@/lib/api";
 import Delete from "./Delete";
 import Add from "./Add";
 import Edit from "./Edit";
+import { useAtom } from "jotai";
+import { watchesAtom } from "@/lib/atoms";
 
-type Watch = {
+export type WatchType = {
   $id: string;
   name: string;
   price: number;
@@ -25,8 +27,8 @@ type Watch = {
 
 export default function WatchesDashboard() {
   const [search, setSearch] = useState("");
-  const [watches, setWatches] = useState<Watch[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [watches, setWatches] = useAtom(watchesAtom);
+  const [loading, setLoading] = useState(false);
 
   const filtered = watches.filter((w) =>
     w.name.toLowerCase().includes(search.toLowerCase())
@@ -34,19 +36,21 @@ export default function WatchesDashboard() {
 
   useEffect(() => {
     const fetchWatches = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
         const data = await api("get", "/watches");
         setWatches(data);
       } catch (error) {
-        console.error("Error fetching watches: " + error);
+        console.error("Error fetching watches:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchWatches();
-  }, []);
+    if (!watches.length) {
+      fetchWatches();
+    }
+  }, [watches.length]);
 
   return (
     <div className="p-6">
@@ -54,10 +58,10 @@ export default function WatchesDashboard() {
         <h2 className="text-xl font-semibold">Watches</h2>
         <div className="flex gap-2">
           <Input
-            placeholder="Search ..."
+            placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-64"
+            className="w-48"
           />
           <Add />
         </div>
