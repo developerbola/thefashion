@@ -47,6 +47,8 @@ const Add = () => {
     }
   };
 
+  const isDisabled = !name || !price || !image;
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -95,15 +97,24 @@ const Add = () => {
 
           <div className="space-y-2">
             <Label htmlFor="image">Image</Label>
-            <Input
-              id="image"
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setImage(e.target.files ? e.target.files[0] : null)
-              }
-              required
-            />
+            <div className="flex gap-2 items-center">
+              <Input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setImage(e.target.files ? e.target.files[0] : null)
+                }
+                required
+              />
+              {image && (
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={"watch"}
+                  className="h-[40px] rounded-[4px]"
+                />
+              )}
+            </div>
           </div>
 
           <DialogFooter>
@@ -114,7 +125,9 @@ const Add = () => {
             >
               Cancel
             </Button>
-            <Button type="submit">Add</Button>
+            <Button type="submit" disabled={isDisabled}>
+              Add
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -34,19 +34,18 @@ export default function OutfitsDashboard() {
     w.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const fetch = async () => {
+    setLoading(true);
+    try {
+      const data = await api("get", "/outfits");
+      setWatches(data);
+    } catch (error) {
+      console.error("Error fetching outfits:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      try {
-        const data = await api("get", "/watches");
-        setWatches(data);
-      } catch (error) {
-        console.error("Error fetching watches:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (!outfits.length) {
       fetch();
     }
@@ -55,7 +54,7 @@ export default function OutfitsDashboard() {
   return (
     <div className="p-6">
       <div className="mb-4 flex justify-between">
-        <h2 className="text-xl font-semibold">Watches</h2>
+        <h2 className="text-xl font-semibold">Outfits</h2>
         <div className="flex gap-2">
           <Input
             placeholder="Search"

@@ -97,21 +97,23 @@ const Edit = ({ watch }: EditProps) => {
 
           <div className="space-y-2">
             <Label htmlFor="image">Change Image</Label>
-            <Input
-              id="image"
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setImage(e.target.files ? e.target.files[0] : null)
-              }
-            />
-            {watch.imageUrl && (
-              <img
-                src={watch.imageUrl}
-                alt={watch.name}
-                className="h-[40px] mt-2"
+            <div className="flex gap-2 items-center">
+              <Input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setImage(e.target.files ? e.target.files[0] : null)
+                }
               />
-            )}
+              {watch.imageUrl && (
+                <img
+                  src={watch.imageUrl}
+                  alt={watch.name}
+                  className="h-[40px] rounded-[4px]"
+                />
+              )}
+            </div>
           </div>
 
           <DialogFooter>

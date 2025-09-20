@@ -100,7 +100,7 @@ export default function WatchesDashboard() {
                   </TableCell>
                 </TableRow>
               ))
-            ) : filtered.length === 0 ? (
+            ) : filtered.length === 0 && !loading ? (
               <TableRow>
                 <TableCell colSpan={5} className="text-center p-4 text-sm">
                   No results.

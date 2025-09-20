@@ -15,21 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SquarePen } from "lucide-react";
+import { ProductType } from "@/sections/home/Outfits";
 
-type EditProps = {
-  watch: {
-    $id: string;
-    name: string;
-    price: number;
-    imageUrl: string;
-  };
-  onUpdated?: () => void;
-};
-
-const Edit = ({ watch }: EditProps) => {
+const Edit = ({ outfit }: { outfit: ProductType }) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState(watch.name);
-  const [price, setPrice] = useState(watch.price.toString());
+  const [name, setName] = useState(outfit.name);
+  const [price, setPrice] = useState(outfit.price.toString());
   const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,7 +32,7 @@ const Edit = ({ watch }: EditProps) => {
     if (image) formData.append("image", image);
 
     try {
-      await api("put", `/watches/${watch.$id}`, formData);
+      await api("put", `/outfits/${outfit.$id}`, formData);
       alert("Updated successfully!");
       setOpen(false);
     } catch (err) {
@@ -49,7 +40,7 @@ const Edit = ({ watch }: EditProps) => {
     }
   };
   const isUnchanged =
-    name === watch.name && price === watch.price.toString() && !image;
+    name === outfit.name && price === outfit.price.toString() && !image;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -61,7 +52,7 @@ const Edit = ({ watch }: EditProps) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Watch</DialogTitle>
+          <DialogTitle>Edit Outfit</DialogTitle>
           <DialogDescription>
             Update the details below and save changes.
           </DialogDescription>
@@ -97,21 +88,23 @@ const Edit = ({ watch }: EditProps) => {
 
           <div className="space-y-2">
             <Label htmlFor="image">Change Image</Label>
-            <Input
-              id="image"
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setImage(e.target.files ? e.target.files[0] : null)
-              }
-            />
-            {watch.imageUrl && (
-              <img
-                src={watch.imageUrl}
-                alt={watch.name}
-                className="h-[40px] mt-2"
+            <div className="flex gap-2 items-center">
+              <Input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setImage(e.target.files ? e.target.files[0] : null)
+                }
               />
-            )}
+              {outfit.imageUrl && (
+                <img
+                  src={outfit.imageUrl}
+                  alt={outfit.name}
+                  className="h-[40px] rounded-[4px]"
+                />
+              )}
+            </div>
           </div>
 
           <DialogFooter>
