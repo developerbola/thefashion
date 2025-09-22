@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SquarePen } from "lucide-react";
-import { ProductType } from "@/sections/home/Outfits";
 
 const Edit = ({ outfit }: { outfit: ProductType }) => {
   const [open, setOpen] = useState(false);
