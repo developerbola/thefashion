@@ -18,13 +18,6 @@ import Edit from "./Edit";
 import { useAtom } from "jotai";
 import { outfitsAtom } from "@/lib/atoms";
 
-export type OutfitType = {
-  $id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-};
-
 export default function OutfitsDashboard() {
   const [search, setSearch] = useState("");
   const [outfits, setWatches] = useAtom(outfitsAtom);
@@ -72,6 +65,7 @@ export default function OutfitsDashboard() {
             <TableRow>
               <TableHead>ID</TableHead>
               <TableHead>Name</TableHead>
+              <TableHead>Brand</TableHead>
               <TableHead>Looks</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Actions</TableHead>
@@ -81,6 +75,9 @@ export default function OutfitsDashboard() {
             {loading ? (
               Array.from({ length: 5 }).map((_, idx) => (
                 <TableRow key={idx}>
+                  <TableCell>
+                    <Skeleton className="h-4 w-6" />
+                  </TableCell>
                   <TableCell>
                     <Skeleton className="h-4 w-6" />
                   </TableCell>
@@ -110,6 +107,7 @@ export default function OutfitsDashboard() {
                 <TableRow key={outfit.$id}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{outfit.name}</TableCell>
+                  <TableCell>{outfit.brand}</TableCell>
                   <TableCell>
                     <img
                       src={outfit.imageUrl}

@@ -18,13 +18,6 @@ import Edit from "./Edit";
 import { useAtom } from "jotai";
 import { watchesAtom } from "@/lib/atoms";
 
-export type WatchType = {
-  $id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-};
-
 export default function WatchesDashboard() {
   const [search, setSearch] = useState("");
   const [watches, setWatches] = useAtom(watchesAtom);

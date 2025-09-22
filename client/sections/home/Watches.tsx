@@ -12,13 +12,6 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/ProductCard";
 
-export type ProductType = {
-  $id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-};
-
 export default function Watches() {
   const [watches, setWatches] = useState<ProductType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
@@ -89,7 +82,7 @@ export default function Watches() {
                   key={i}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <Skeleton className="w-full h-[530px]" />
+                  <Skeleton className="w-full aspect-square" />
                 </CarouselItem>
               ))}
         </CarouselContent>

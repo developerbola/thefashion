@@ -15,13 +15,6 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { outfitsAtom } from "@/lib/atoms";
 
-export type ProductType = {
-  $id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-};
-
 export default function Outfits() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [loading, setLoading] = useState(false);
@@ -31,9 +24,8 @@ export default function Outfits() {
     const fetch = async () => {
       setLoading(true);
 
-      const { data: outfits } = await api("get", "/outfits");
-      setOutfits(outfits);
-
+      const data = await api("get", "/outfits");
+      setOutfits(data);
       setLoading(false);
     };
     if (!outfits.length) {
@@ -87,7 +79,7 @@ export default function Outfits() {
                   key={i}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <Skeleton className="w-full h-[442px]" />
+                  <Skeleton className="w-full aspect-square" />
                 </CarouselItem>
               ))
             : outfits?.map((i) => (
