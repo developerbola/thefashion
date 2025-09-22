@@ -10,10 +10,12 @@ async function addOutfit(c) {
     const form = await c.req.formData();
     const name = form.get("name");
     const price = parseFloat(form.get("price"));
+    const brand = parseFloat(form.get("brand"));
+    const description = parseFloat(form.get("description"));
     const file = form.get("image");
 
-    if (!name || !price || !file) {
-      return c.json({ error: "Name, price, and image are required" }, 400);
+    if (!name || !price || !file || !brand || !description) {
+      return c.json({ error: "All fields are required" }, 400);
     }
 
     const existing = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
@@ -36,7 +38,7 @@ async function addOutfit(c) {
       DATABASE_ID,
       COLLECTION_ID,
       "unique()",
-      { name, price, imageUrl }
+      { name, price, imageUrl, brand, description }
     );
 
     return c.json(doc);
@@ -59,20 +61,57 @@ async function deleteOutfit(c) {
     return c.json({ error: err.message }, 500);
   }
 }
-
 async function updateOutfit(c) {
   const id = c.req.param("id");
-  const body = await c.req.json();
+
   try {
+    const form = await c.req.formData();
+    const name = form.get("name");
+    const price = parseFloat(form.get("price"));
+    const brand = form.get("brand");
+    const description = form.get("description");
+    const file = form.get("image");
+
+    if (!name || !price || !brand || !description) {
+      return c.json(
+        { error: "Name, brand, description, and price are required" },
+        400
+      );
+    }
+
+    let imageUrl;
+
+    if (file && file.size > 0) {
+      const uploadedFile = await storage.createFile(
+        BUCKET_ID,
+        `outfit-${id}-${Date.now()}`,
+        file
+      );
+
+      imageUrl = `https://fra.cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${uploadedFile.$id}/view?project=${process.env.APPWRITE_PROJECT_ID}`;
+    }
+
+    const payload = {
+      name,
+      brand,
+      description,
+      price,
+    };
+
+    if (imageUrl) {
+      payload.imageUrl = imageUrl;
+    }
+
     const updated = await databases.updateDocument(
       DATABASE_ID,
       COLLECTION_ID,
       id,
-      body
+      payload
     );
+
     return c.json(updated);
   } catch (err) {
-    console.error("Update outfit error: ", err);
+    console.error("Update outfit error:", err);
     if (err.code == 404) {
       return c.json({ error: "Outfit not found" }, 404);
     }

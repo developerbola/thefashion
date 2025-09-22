@@ -15,10 +15,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SquarePen } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 const Edit = ({ outfit }: { outfit: ProductType }) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(outfit.name);
+  const [brand, setBrand] = useState(outfit.brand || "");
+  const [description, setDescription] = useState(outfit.description || "");
   const [price, setPrice] = useState(outfit.price.toString());
   const [image, setImage] = useState<File | null>(null);
 
@@ -27,6 +30,8 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
 
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("brand", brand);
+    formData.append("description", description);
     formData.append("price", price);
     if (image) formData.append("image", image);
 
@@ -38,8 +43,13 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
       console.error("Edit product error:", err);
     }
   };
+
   const isUnchanged =
-    name === outfit.name && price === outfit.price.toString() && !image;
+    name === outfit.name &&
+    brand === (outfit.brand || "") &&
+    description === (outfit.description || "") &&
+    price === outfit.price.toString() &&
+    !image;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -58,6 +68,7 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -68,6 +79,29 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
             />
           </div>
 
+          {/* Brand */}
+          <div className="space-y-2">
+            <Label htmlFor="brand">Brand</Label>
+            <Input
+              id="brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Description */}
+          <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Price */}
           <div className="space-y-2">
             <Label htmlFor="price">Price</Label>
             <div className="relative">
@@ -85,6 +119,7 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
             </div>
           </div>
 
+          {/* Image */}
           <div className="space-y-2">
             <Label htmlFor="image">Change Image</Label>
             <div className="flex gap-2 items-center">
