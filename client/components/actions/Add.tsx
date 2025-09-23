@@ -14,83 +14,83 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SquarePen } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
+import { CirclePlus } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 
-const Edit = ({ outfit }: { outfit: ProductType }) => {
+const Add = ({ path }: { path: "watches" | "outfits" }) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState(outfit.name);
-  const [brand, setBrand] = useState(outfit.brand || "");
-  const [description, setDescription] = useState(outfit.description || "");
-  const [price, setPrice] = useState(outfit.price.toString());
+  const [name, setName] = useState("");
+  const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!image) {
+      alert("Please select an image");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("brand", brand);
     formData.append("description", description);
     formData.append("price", price);
-    if (image) formData.append("image", image);
+    formData.append("image", image);
 
     try {
-      await api("put", `/outfits/${outfit.$id}`, formData);
-      alert("Updated successfully!");
+      await api("post", "/" + path, formData);
+      alert(`${path} added successfully!`);
       setOpen(false);
+      setName("");
+      setPrice("");
+      setImage(null);
     } catch (err) {
-      console.error("Edit product error:", err);
+      console.error(`Add ${path} error:`, err);
     }
   };
 
-  const isUnchanged =
-    name === outfit.name &&
-    brand === (outfit.brand || "") &&
-    description === (outfit.description || "") &&
-    price === outfit.price.toString() &&
-    !image;
+  const isDisabled = !name || !brand || !description || !price || !image;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size={"icon"}>
-          <SquarePen />
+        <Button>
+          <CirclePlus />
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Outfit</DialogTitle>
+          <DialogTitle>Add new {path}</DialogTitle>
           <DialogDescription>
-            Update the details below and save changes.
+            Fill in the details below to add a new watch to your collection.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="enter product name"
               required
             />
           </div>
-
-          {/* Brand */}
           <div className="space-y-2">
             <Label htmlFor="brand">Brand</Label>
             <Input
               id="brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
+              placeholder="enter product brand"
               required
             />
           </div>
-
-          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
@@ -101,7 +101,6 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
             />
           </div>
 
-          {/* Price */}
           <div className="space-y-2">
             <Label htmlFor="price">Price</Label>
             <div className="relative">
@@ -114,14 +113,14 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+                placeholder="500"
                 className="pl-7"
               />
             </div>
           </div>
 
-          {/* Image */}
           <div className="space-y-2">
-            <Label htmlFor="image">Change Image</Label>
+            <Label htmlFor="image">Image</Label>
             <div className="flex gap-2 items-center">
               <Input
                 id="image"
@@ -130,11 +129,12 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
                 onChange={(e) =>
                   setImage(e.target.files ? e.target.files[0] : null)
                 }
+                required
               />
-              {outfit.imageUrl && (
+              {image && (
                 <img
-                  src={outfit.imageUrl}
-                  alt={outfit.name}
+                  src={URL.createObjectURL(image)}
+                  alt={"outfit"}
                   className="h-[40px] rounded-[4px]"
                 />
               )}
@@ -149,8 +149,8 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isUnchanged}>
-              Save
+            <Button type="submit" disabled={isDisabled}>
+              Add
             </Button>
           </DialogFooter>
         </form>
@@ -159,4 +159,4 @@ const Edit = ({ outfit }: { outfit: ProductType }) => {
   );
 };
 
-export default Edit;
+export default Add;

@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import Delete from "./Delete";
-import Add from "./Add";
-import Edit from "./Edit";
 import { useAtom } from "jotai";
 import { watchesAtom } from "@/lib/atoms";
 import { fetchProduct } from "@/lib/utils";
+import Add from "@/components/actions/Add";
+import Delete from "@/components/actions/Delete";
+import Edit from "@/components/actions/Edit";
 
 export default function WatchesDashboard() {
   const [search, setSearch] = useState("");
@@ -44,7 +44,7 @@ export default function WatchesDashboard() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-48"
           />
-          <Add />
+          <Add path="watches" />
         </div>
       </div>
 
@@ -101,8 +101,8 @@ export default function WatchesDashboard() {
                   </TableCell>
                   <TableCell>${watch.price.toLocaleString()}</TableCell>
                   <TableCell className="flex gap-2">
-                    <Delete />
-                    <Edit watch={watch} />
+                    <Delete path="watches" id={watch.$id} />
+                    <Edit product={watch} path="watches" />
                   </TableCell>
                 </TableRow>
               ))

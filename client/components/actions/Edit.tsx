@@ -15,21 +15,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SquarePen } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
-type EditProps = {
-  watch: {
-    $id: string;
-    name: string;
-    price: number;
-    imageUrl: string;
-  };
-  onUpdated?: () => void;
-};
-
-const Edit = ({ watch }: EditProps) => {
+const Edit = ({
+  product,
+  path,
+}: {
+  product: ProductType;
+  path: "watches" | "outfits";
+}) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState(watch.name);
-  const [price, setPrice] = useState(watch.price.toString());
+  const [name, setName] = useState(product.name);
+  const [brand, setBrand] = useState(product.brand || "");
+  const [description, setDescription] = useState(product.description || "");
+  const [price, setPrice] = useState(product.price.toString());
   const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,19 +36,26 @@ const Edit = ({ watch }: EditProps) => {
 
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("brand", brand);
+    formData.append("description", description);
     formData.append("price", price);
     if (image) formData.append("image", image);
 
     try {
-      await api("put", `/watches/${watch.$id}`, formData);
+      await api("put", `/${path}/${product.$id}`, formData);
       alert("Updated successfully!");
       setOpen(false);
     } catch (err) {
       console.error("Edit product error:", err);
     }
   };
+
   const isUnchanged =
-    name === watch.name && price === watch.price.toString() && !image;
+    name === product.name &&
+    brand === (product.brand || "") &&
+    description === (product.description || "") &&
+    price === product.price.toString() &&
+    !image;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -61,13 +67,14 @@ const Edit = ({ watch }: EditProps) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Watch</DialogTitle>
+          <DialogTitle>Edit Outfit</DialogTitle>
           <DialogDescription>
             Update the details below and save changes.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -78,6 +85,29 @@ const Edit = ({ watch }: EditProps) => {
             />
           </div>
 
+          {/* Brand */}
+          <div className="space-y-2">
+            <Label htmlFor="brand">Brand</Label>
+            <Input
+              id="brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Description */}
+          <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Price */}
           <div className="space-y-2">
             <Label htmlFor="price">Price</Label>
             <div className="relative">
@@ -95,6 +125,7 @@ const Edit = ({ watch }: EditProps) => {
             </div>
           </div>
 
+          {/* Image */}
           <div className="space-y-2">
             <Label htmlFor="image">Change Image</Label>
             <div className="flex gap-2 items-center">
@@ -106,10 +137,10 @@ const Edit = ({ watch }: EditProps) => {
                   setImage(e.target.files ? e.target.files[0] : null)
                 }
               />
-              {watch.imageUrl && (
+              {product.imageUrl && (
                 <img
-                  src={watch.imageUrl}
-                  alt={watch.name}
+                  src={product.imageUrl}
+                  alt={product.name}
                   className="h-[40px] rounded-[4px]"
                 />
               )}

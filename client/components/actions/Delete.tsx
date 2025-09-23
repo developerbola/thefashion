@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/dialog";
 import { Trash } from "lucide-react";
 
-const Delete = () => {
+const Delete = ({ path, id }: { path: "watches" | "outfits"; id: string }) => {
   const [open, setOpen] = useState(false);
 
   const handleDelete = () => {
+    console.log(id)
     console.log("Deleted!");
     setOpen(false);
   };
