@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { api } from "@/lib/api";
 import Delete from "./Delete";
 import Add from "./Add";
 import Edit from "./Edit";
 import { useAtom } from "jotai";
 import { watchesAtom } from "@/lib/atoms";
+import { fetchProduct } from "@/lib/utils";
 
 export default function WatchesDashboard() {
   const [search, setSearch] = useState("");
@@ -28,20 +28,8 @@ export default function WatchesDashboard() {
   );
 
   useEffect(() => {
-    const fetchWatches = async () => {
-      setLoading(true);
-      try {
-        const data = await api("get", "/watches");
-        setWatches(data);
-      } catch (error) {
-        console.error("Error fetching watches:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (!watches.length) {
-      fetchWatches();
+      fetchProduct(setLoading, setWatches, "watches");
     }
   }, [watches.length]);
 

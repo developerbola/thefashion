@@ -11,36 +11,25 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { api } from "@/lib/api";
 import Delete from "./Delete";
 import Add from "./Add";
 import Edit from "./Edit";
 import { useAtom } from "jotai";
 import { outfitsAtom } from "@/lib/atoms";
+import { fetchProduct } from "@/lib/utils";
 
 export default function OutfitsDashboard() {
   const [search, setSearch] = useState("");
-  const [outfits, setWatches] = useAtom(outfitsAtom);
+  const [outfits, setOutfits] = useAtom(outfitsAtom);
   const [loading, setLoading] = useState(false);
 
   const filtered = outfits.filter((w) =>
     w.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const fetch = async () => {
-    setLoading(true);
-    try {
-      const data = await api("get", "/outfits");
-      setWatches(data);
-    } catch (error) {
-      console.error("Error fetching outfits:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   useEffect(() => {
     if (!outfits.length) {
-      fetch();
+      fetchProduct(setLoading, setOutfits, "outfits");
     }
   }, []);
 

@@ -1,5 +1,5 @@
 "use client";
-import { api } from "@/lib/api";
+
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -11,17 +11,19 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/ProductCard";
+import { useAtom } from "jotai";
+import { watchesAtom } from "@/lib/atoms";
+import { fetchProduct } from "@/lib/utils";
 
 export default function Watches() {
-  const [watches, setWatches] = useState<ProductType[]>([]);
+  const [watches, setWatches] = useAtom(watchesAtom);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchWatches() {
-      const res = await api("get", "/watches");
-      setWatches(res);
+    if (!watches.length) {
+      fetchProduct(setLoading, setWatches, "watches");
     }
-    fetchWatches();
   }, []);
 
   return (
@@ -64,8 +66,16 @@ export default function Watches() {
         </div>
 
         <CarouselContent className="-ml-4">
-          {watches?.length > 0
-            ? watches.map((i, _) => (
+          {loading
+            ? [1, 2, 3].map((i) => (
+                <CarouselItem
+                  key={i}
+                  className="md:basis-1/2 lg:basis-1/3 pl-4"
+                >
+                  <Skeleton className="w-full aspect-square" />
+                </CarouselItem>
+              ))
+            : watches.map((i, _) => (
                 <CarouselItem
                   key={i.$id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
@@ -75,14 +85,6 @@ export default function Watches() {
                   >
                     <ProductCard item={i} />
                   </Link>
-                </CarouselItem>
-              ))
-            : [1, 2, 3].map((i) => (
-                <CarouselItem
-                  key={i}
-                  className="md:basis-1/2 lg:basis-1/3 pl-4"
-                >
-                  <Skeleton className="w-full aspect-square" />
                 </CarouselItem>
               ))}
         </CarouselContent>

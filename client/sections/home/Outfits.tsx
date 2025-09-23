@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@/lib/api";
 import {
   Carousel,
   CarouselApi,
@@ -14,22 +13,16 @@ import ProductCard from "@/components/ProductCard";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { outfitsAtom } from "@/lib/atoms";
+import { fetchProduct } from "@/lib/utils";
 
 export default function Outfits() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [loading, setLoading] = useState(false);
-  const [outfits, setOutfits] = useAtom<ProductType[]>(outfitsAtom);
+  const [outfits, setOutfits] = useAtom(outfitsAtom);
 
   useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-
-      const data = await api("get", "/outfits");
-      setOutfits(data);
-      setLoading(false);
-    };
     if (!outfits.length) {
-      fetch();
+      fetchProduct(setLoading, setOutfits, "outfits");
     }
   }, []);
 
