@@ -10,8 +10,8 @@ async function addOutfit(c) {
     const form = await c.req.formData();
     const name = form.get("name");
     const price = parseFloat(form.get("price"));
-    const brand = parseFloat(form.get("brand"));
-    const description = parseFloat(form.get("description"));
+    const brand = form.get("brand");
+    const description = form.get("description");
     const file = form.get("image");
 
     if (!name || !price || !file || !brand || !description) {
@@ -19,7 +19,7 @@ async function addOutfit(c) {
     }
 
     const existing = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
-      Query.equal("name", name),
+      Query.equal("name", [name]),
     ]);
 
     if (existing.total > 0) {
@@ -132,14 +132,16 @@ async function getOutfits(c) {
 async function getSingleOutfit(c) {
   try {
     const name = c.req.param("name");
+    const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
+      Query.equal("name", [name]),
+      Query.limit(1),
+    ]);
 
-    const outfit = await databases.getDocument(
-      DATABASE_ID,
-      COLLECTION_ID,
-      name
-    );
+    if (response.total === 0) {
+      return c.json({ error: "Outfit not found" }, 404);
+    }
 
-    return c.json(outfit, 200);
+    return c.json(response.documents[0], 200);
   } catch (err) {
     console.error("Get single outfit error: ", err);
     return c.json({ error: "Outfit not found" }, 404);

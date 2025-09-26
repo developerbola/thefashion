@@ -93,10 +93,16 @@ async function getWatches(c) {
 async function getSingleWatch(c) {
   try {
     const name = c.req.param("name");
+    const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
+      Query.equal("name", [name]),
+      Query.limit(1),
+    ]);
 
-    const watch = await databases.getDocument(DATABASE_ID, COLLECTION_ID, name);
+    if (response.total === 0) {
+      return c.json({ error: "Watch not found" }, 404);
+    }
 
-    return c.json(watch, 200);
+    return c.json(response.documents[0], 200);
   } catch (err) {
     console.error("Get single watch error: ", err);
     return c.json({ error: "Watch not found" }, 404);

@@ -80,11 +80,7 @@ export default function Watches() {
                   key={i.$id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
-                  <Link
-                    href={"/watch/" + i.name.toLowerCase().split(" ").join("-")}
-                  >
-                    <ProductCard item={i} />
-                  </Link>
+                  <ProductCard item={i} />
                 </CarouselItem>
               ))}
         </CarouselContent>

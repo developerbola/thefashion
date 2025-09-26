@@ -2,9 +2,9 @@
 
 import { useParams } from "next/navigation";
 
-const Product = () => {
+const Watch = () => {
   const { slug } = useParams();
-  return <div>Outfit: {slug}</div>;
+  return <div>Product: {slug}</div>;
 };
 
-export default Product;
+export default Watch;
