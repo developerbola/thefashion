@@ -9,21 +9,22 @@ async function addOutfit(c) {
   try {
     const form = await c.req.formData();
     const name = form.get("name");
+    const slug = form.get("slug");
     const price = parseFloat(form.get("price"));
     const brand = form.get("brand");
     const description = form.get("description");
     const file = form.get("image");
 
-    if (!name || !price || !file || !brand || !description) {
+    if (!name || !price || !file || !brand || !description || !slug) {
       return c.json({ error: "All fields are required" }, 400);
     }
 
     const existing = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
-      Query.equal("name", [name]),
+      Query.equal("slug", [slug]),
     ]);
 
     if (existing.total > 0) {
-      return c.json({ error: "Outfit with this name already exists" }, 400);
+      return c.json({ error: "Outfit with this slug already exists" }, 400);
     }
 
     const uploadedFile = await storage.createFile(
@@ -38,7 +39,7 @@ async function addOutfit(c) {
       DATABASE_ID,
       COLLECTION_ID,
       "unique()",
-      { name, price, imageUrl, brand, description }
+      { name, price, imageUrl, brand, description, slug }
     );
 
     return c.json(doc);
@@ -61,18 +62,20 @@ async function deleteOutfit(c) {
     return c.json({ error: err.message }, 500);
   }
 }
+
 async function updateOutfit(c) {
   const id = c.req.param("id");
 
   try {
     const form = await c.req.formData();
     const name = form.get("name");
+    const slug = form.get("slug");
     const price = parseFloat(form.get("price"));
     const brand = form.get("brand");
     const description = form.get("description");
     const file = form.get("image");
 
-    if (!name || !price || !brand || !description) {
+    if (!name || !price || !brand || !description || !slug) {
       return c.json(
         { error: "Name, brand, description, and price are required" },
         400
@@ -96,6 +99,7 @@ async function updateOutfit(c) {
       brand,
       description,
       price,
+      slug,
     };
 
     if (imageUrl) {

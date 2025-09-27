@@ -35,6 +35,16 @@ const Add = ({ path }: { path: "watches" | "outfits" }) => {
 
     const formData = new FormData();
     formData.append("name", name);
+    formData.append(
+      "slug",
+      name
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9\-]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "")
+    );
     formData.append("brand", brand);
     formData.append("description", description);
     formData.append("price", price);
@@ -98,9 +108,10 @@ const Add = ({ path }: { path: "watches" | "outfits" }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              placeholder="write atractive description"
+              className="resize-none"
             />
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="price">Price</Label>
             <div className="relative">

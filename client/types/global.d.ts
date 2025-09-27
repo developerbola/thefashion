@@ -5,4 +5,5 @@ type ProductType = {
   imageUrl: string;
   brand: string;
   description: string;
+  slug: string;
 };

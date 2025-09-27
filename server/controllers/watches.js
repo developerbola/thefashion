@@ -9,6 +9,9 @@ async function addWatch(c) {
   try {
     const form = await c.req.formData();
     const name = form.get("name");
+    const slug = form.get("slug");
+    const brand = form.get("brand");
+    const description = form.get("description");
     const price = parseFloat(form.get("price"));
     const file = form.get("image");
 
@@ -36,7 +39,7 @@ async function addWatch(c) {
       DATABASE_ID,
       COLLECTION_ID,
       "unique()",
-      { name, price, imageUrl }
+      { name, price, imageUrl, brand, slug, description }
     );
 
     return c.json(doc);
@@ -62,19 +65,59 @@ async function deleteWatch(c) {
 
 async function updateWatch(c) {
   const id = c.req.param("id");
-  const body = await c.req.json();
+
   try {
+    const form = await c.req.formData();
+    const name = form.get("name");
+    const slug = form.get("slug");
+    const price = parseFloat(form.get("price"));
+    const brand = form.get("brand");
+    const description = form.get("description");
+    const file = form.get("image");
+
+    if (!name || !price || !brand || !description || !slug) {
+      return c.json(
+        { error: "Name, brand, description, and price are required" },
+        400
+      );
+    }
+
+    let imageUrl;
+
+    if (file && file.size > 0) {
+      const uploadedFile = await storage.createFile(
+        BUCKET_ID,
+        `watch-${id}-${Date.now()}`,
+        file
+      );
+
+      imageUrl = `https://fra.cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${uploadedFile.$id}/view?project=${process.env.APPWRITE_PROJECT_ID}`;
+    }
+
+    const payload = {
+      name,
+      brand,
+      description,
+      price,
+      slug,
+    };
+
+    if (imageUrl) {
+      payload.imageUrl = imageUrl;
+    }
+
     const updated = await databases.updateDocument(
       DATABASE_ID,
       COLLECTION_ID,
       id,
-      body
+      payload
     );
+
     return c.json(updated);
   } catch (err) {
-    console.error("Update watch error", err);
+    console.error("Update watch error:", err);
     if (err.code == 404) {
-      return c.json({ error: "watch not found" }, 404);
+      return c.json({ error: "Watch not found" }, 404);
     }
     return c.json({ error: err.message }, 500);
   }

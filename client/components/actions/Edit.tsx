@@ -36,6 +36,16 @@ const Edit = ({
 
     const formData = new FormData();
     formData.append("name", name);
+    formData.append(
+      "slug",
+      name
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9\-]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "")
+    );
     formData.append("brand", brand);
     formData.append("description", description);
     formData.append("price", price);
@@ -103,7 +113,9 @@ const Edit = ({
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="write motivational description"
               required
+              className="resize-none"
             />
           </div>
 

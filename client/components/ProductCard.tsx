@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const ProductCard = ({ item }: { item: ProductType }) => {
   return (
-    <Link href={`/product/` + item.name.toLowerCase().split(" ").join("-")}>
+    <Link href={`/product/` + item.slug}>
       <div className="relative p-4 grid place-items-center bg-[#fafafa] cursor-pointer group overflow-clip">
         <div className="absolute p-4 flex flex-col justify-between h-full group-hover:h-[130%] transition-all duration-400 w-full z-[2]">
           <div className="flex justify-between [&_p]:text-base [&_p]:md:text-xl [&_p]:font-medium">
