@@ -135,9 +135,9 @@ async function getOutfits(c) {
 
 async function getSingleOutfit(c) {
   try {
-    const name = c.req.param("name");
+    const slug = c.req.param("slug");
     const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
-      Query.equal("name", [name]),
+      Query.equal("slug", [slug]),
       Query.limit(1),
     ]);
 
