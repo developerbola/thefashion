@@ -17,12 +17,14 @@ import { fetchProduct } from "@/lib/utils";
 
 export default function Outfits() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [outfits, setOutfits] = useAtom(outfitsAtom);
 
   useEffect(() => {
     if (!outfits.length) {
       fetchProduct(setLoading, setOutfits, "outfits");
+    } else {
+      setLoading(false);
     }
   }, []);
 

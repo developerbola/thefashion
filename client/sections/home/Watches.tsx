@@ -18,11 +18,13 @@ import { fetchProduct } from "@/lib/utils";
 export default function Watches() {
   const [watches, setWatches] = useAtom(watchesAtom);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!watches.length) {
       fetchProduct(setLoading, setWatches, "watches");
+    } else {
+      setLoading(false)
     }
   }, []);
 
