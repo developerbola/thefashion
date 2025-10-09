@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer>
       <div className="flex flex-col gap-5 mx-auto w-full max-w-7xl p-4">
         <div className="md:flex md:justify-between">
           <div className="flex flex-col gap-5 mb-6 md:mb-0 lg:max-w-[30%] sm:max-w-[50%] vxs:max-w-full">
-            <a href="/" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <img
                 src="/logo.svg"
                 className="h-8 me-3"
@@ -13,7 +15,7 @@ const Footer = () => {
               <span className="self-center text-2xl font-semibold whitespace-nowrap">
                 the fashion.
               </span>
-            </a>
+            </Link>
             <p>
               the fashion. - Minimal e-market for shopping clothes and watches.
               You can easily buy what you want. Make your style, be unique.
@@ -26,27 +28,27 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-500 font-medium flex flex-col gap-4">
                 <li>
-                  <a href="https://react.dev/" className="hover:underline">
+                  <Link href="https://react.dev/" className="hover:underline">
                     NextJS
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="https://tailwindcss.com/"
                     className="hover:underline"
                   >
                     Tailwind CSS
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="https://hono.dev" className="hover:underline">
+                  <Link href="https://hono.dev" className="hover:underline">
                     HonoJS
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="https://appwrite.io" className="hover:underline">
+                  <Link href="https://appwrite.io" className="hover:underline">
                     Appwrite
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -56,17 +58,17 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-500 font-medium">
                 <li className="mb-4">
-                  <a
+                  <Link
                     href="https://github.com/developerbola"
                     className="hover:underline "
                   >
                     Github
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="https://t.me/mutawirr" className="hover:underline">
+                  <Link href="https://t.me/mutawirr" className="hover:underline">
                     Telegram
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -76,14 +78,14 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-500 font-medium">
                 <li className="mb-4">
-                  <a href="/#" className="hover:underline">
+                  <Link href="/#" className="hover:underline">
                     Cookie Preferences
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/#" className="hover:underline">
+                  <Link href="/#" className="hover:underline">
                     Shipping & Returns
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -92,13 +94,13 @@ const Footer = () => {
         <div className="flex items-center justify-between h-[70px]">
           <span className="text-sm text-gray-500 sm:text-center">
             © 2024{" "}
-            <a href="/" className="hover:underline">
+            <Link href="/" className="hover:underline">
               StyleSphere
-            </a>
+            </Link>
             . All Rights Reserved. Made by{" "}
-            <a href="https://github.com/developerbola" className="underline">
+            <Link href="https://github.com/developerbola" className="underline">
               developerbola
-            </a>
+            </Link>
           </span>
         </div>
       </div>

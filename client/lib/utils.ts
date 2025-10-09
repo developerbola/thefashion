@@ -22,10 +22,3 @@ export async function fetchProduct(
     setLoading(false);
   }
 }
-
-export const addToCart = (
-  product: any,
-  setCart: Dispatch<SetStateAction<any[]>>
-) => {
-  setCart((prevCart) => [...prevCart, product]);
-};
