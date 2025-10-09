@@ -6,4 +6,5 @@ type ProductType = {
   brand: string;
   description: string;
   slug: string;
+  type: "watch" | "outfit";
 };
