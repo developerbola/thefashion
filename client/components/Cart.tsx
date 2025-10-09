@@ -9,11 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { cartAtom } from "@/lib/atoms";
 import { useAtom } from "jotai";
-import { Input } from "./ui/input";
 import {
   ButtonGroup,
-  ButtonGroupSeparator,
-  ButtonGroupText,
 } from "@/components/ui/button-group";
 import { MinusIcon, PlusIcon } from "lucide-react";
 
