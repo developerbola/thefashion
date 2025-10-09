@@ -7,20 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-type ProductType = {
-  $id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  brand: string;
-  description: string;
-  slug: string;
-  type: "watch" | "outfit";
-  collection?: string;
-  size?: string;
-  material?: string;
-};
-
 interface Type extends Omit<ProductType, "imageUrl"> {
   imageUrl: undefined | string;
 }
@@ -91,7 +77,7 @@ const Watch = () => {
             </p>
             <Input
               type="number"
-              min="1"
+              min={1}
               defaultValue="1"
               className="w-20 rounded-sm"
               disabled={isLoading}
@@ -125,7 +111,7 @@ const Watch = () => {
                 {isLoading ? (
                   <Skeleton className="h-full w-20 rounded-sm" />
                 ) : (
-                  product?.size || "STANDART"
+                  "STANDART"
                 )}
               </span>
             </div>
@@ -135,7 +121,7 @@ const Watch = () => {
                 {isLoading ? (
                   <Skeleton className="h-full w-18 rounded-sm" />
                 ) : (
-                  product?.material || "METALL"
+                  "METALL"
                 )}
               </span>
             </div>

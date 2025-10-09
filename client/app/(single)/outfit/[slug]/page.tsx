@@ -7,21 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cartAtom } from "@/lib/atoms";
-import { useAtom } from "jotai";
-
-type ProductType = {
-  $id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  brand: string;
-  description: string;
-  slug: string;
-  type: "watch" | "outfit";
-  collection?: string;
-  size?: string;
-  material?: string;
-};
+import { useSetAtom } from "jotai";
 
 interface Type extends Omit<ProductType, "imageUrl"> {
   imageUrl: undefined | string;
@@ -44,7 +30,7 @@ const Outfit = () => {
   }, [slug]);
 
   const isLoading = !product;
-  const [cart, setCart] = useAtom(cartAtom);
+  const setCart = useSetAtom(cartAtom);
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4 md:p-10">
@@ -92,7 +78,7 @@ const Outfit = () => {
             </p>
             <Input
               type="number"
-              min="1"
+              min={1}
               defaultValue="1"
               className="w-20 rounded-sm"
               disabled={isLoading}
@@ -126,7 +112,7 @@ const Outfit = () => {
                 {isLoading ? (
                   <Skeleton className="h-full w-20 rounded-sm" />
                 ) : (
-                  product?.size || "STANDART"
+                  "STANDART"
                 )}
               </span>
             </div>
@@ -136,7 +122,7 @@ const Outfit = () => {
                 {isLoading ? (
                   <Skeleton className="h-full w-18 rounded-sm" />
                 ) : (
-                  product?.material || "COTTON"
+                  "COTTON"
                 )}
               </span>
             </div>
