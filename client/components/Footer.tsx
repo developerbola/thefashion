@@ -4,10 +4,7 @@ const Footer = () => {
       <div className="flex flex-col gap-5 mx-auto w-full max-w-7xl p-4">
         <div className="md:flex md:justify-between">
           <div className="flex flex-col gap-5 mb-6 md:mb-0 lg:max-w-[30%] sm:max-w-[50%] vxs:max-w-full">
-            <a
-              href="/"
-              className="flex items-center"
-            >
+            <a href="/" className="flex items-center">
               <img
                 src="/logo.svg"
                 className="h-8 me-3"
@@ -18,9 +15,8 @@ const Footer = () => {
               </span>
             </a>
             <p>
-              the fashion. - Minimal e-market for shopping clothes, shoes and watches.
-              You can easily buy what you want. Make your style, make your
-              dream.
+              the fashion. - Minimal e-market for shopping clothes and watches.
+              You can easily buy what you want. Make your style, be unique.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">

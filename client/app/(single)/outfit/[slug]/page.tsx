@@ -136,7 +136,7 @@ const Outfit = () => {
                 {isLoading ? (
                   <Skeleton className="h-full w-18 rounded-sm" />
                 ) : (
-                  product?.material || "METALL"
+                  product?.material || "COTTON"
                 )}
               </span>
             </div>
@@ -145,23 +145,17 @@ const Outfit = () => {
           {/* Buttons */}
           <div className="flex flex-col gap-3 mt-6">
             <Button
-              className="w-full h-12 bg-black hover:bg-gray-800 text-white rounded-md text-sm font-semibold tracking-wide"
+              className="w-full h-12 bg-black hover:bg-gray-800 text-white rounded-md text-md font-semibold tracking-wide"
               disabled={isLoading}
             >
               BUY NOW
             </Button>
             <Button
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-semibold tracking-wide"
+              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-md font-semibold tracking-wide"
               disabled={isLoading}
               onClick={() => {
                 if (product) {
-                  setCart((prevCart) => [
-                    ...prevCart,
-                    {
-                      ...product,
-                      imageUrl: product.imageUrl || "/placeholder.png",
-                    } as ProductType,
-                  ]);
+                  setCart((prevCart) => [...prevCart, product as ProductType]);
                 }
               }}
             >
