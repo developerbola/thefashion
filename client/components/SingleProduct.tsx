@@ -6,8 +6,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cartAtom } from "@/lib/atoms";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { ParamValue } from "next/dist/server/request/params";
+import { formattedPrice } from "@/lib/utils";
 
 interface Type extends Omit<ProductType, "imageUrl"> {
   imageUrl: undefined | string;
@@ -38,7 +39,7 @@ const SingleProduct = ({
   }, [slug]);
 
   const isLoading = !product;
-  const setCart = useSetAtom(cartAtom);
+  const [cart, setCart] = useAtom(cartAtom);
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4 md:p-10">
@@ -59,7 +60,15 @@ const SingleProduct = ({
               {isLoading ? (
                 <Skeleton className="h-10 w-40 rounded-sm" />
               ) : (
-                product?.name
+                <>
+                  {product?.name}
+                  {(() => {
+                    const cartItem = cart.find(
+                      (item) => item.$id === product?.$id
+                    );
+                    return cartItem ? ` [${cartItem.quantity} in cart]` : "";
+                  })()}
+                </>
               )}
             </h1>
             <div className="text-gray-600 mt-2">
@@ -76,7 +85,7 @@ const SingleProduct = ({
             {isLoading ? (
               <Skeleton className="h-7 w-20 rounded-sm" />
             ) : (
-              product?.price
+              formattedPrice(product?.price)
             )}
           </div>
 
@@ -87,7 +96,6 @@ const SingleProduct = ({
             <Input
               type="number"
               min={1}
-              defaultValue="1"
               className="w-20 rounded-sm"
               disabled={isLoading}
               value={quantity}
@@ -156,8 +164,24 @@ const SingleProduct = ({
               className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-md font-semibold tracking-wide"
               disabled={isLoading}
               onClick={() => {
+                const existingIndex = cart.findIndex(
+                  (item) => item.$id === product?.$id
+                );
+                if (existingIndex !== -1 && product) {
+                  setCart((prevCart) =>
+                    prevCart.map((item, idx) =>
+                      idx === existingIndex
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
+                    )
+                  );
+                  return;
+                }
                 if (product) {
-                  setCart((prevCart) => [...prevCart, product as ProductType]);
+                  setCart((prevCart) => [
+                    ...prevCart,
+                    { ...product, quantity: quantity } as CartProductType,
+                  ]);
                 }
               }}
             >

@@ -8,3 +8,7 @@ type ProductType = {
   slug: string;
   type: "watch" | "outfit";
 };
+
+interface CartProductType extends ProductType {
+  quantity: number;
+}

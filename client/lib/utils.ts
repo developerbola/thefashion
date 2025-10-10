@@ -22,3 +22,7 @@ export async function fetchProduct(
     setLoading(false);
   }
 }
+
+export const formattedPrice = (num: number) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
