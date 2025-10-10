@@ -11,6 +11,7 @@ import { cartAtom } from "@/lib/atoms";
 import { useAtom } from "jotai";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import Link from "next/link";
 
 const Cart = () => {
   const [cart, setCart] = useAtom(cartAtom);
@@ -138,9 +139,11 @@ const Cart = () => {
                 <span>Total:</span>
                 <span>${total}</span>
               </div>
-              <Button className="w-full" size="lg">
-                Continue to Checkout
-              </Button>
+              <Link href="/checkout" className="w-full">
+                <Button className="w-full" size="lg">
+                  Continue to Checkout
+                </Button>
+              </Link>
             </div>
           </SheetFooter>
         )}

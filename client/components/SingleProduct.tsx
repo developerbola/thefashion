@@ -133,8 +133,10 @@ const SingleProduct = ({
               <span className="font-medium text-gray-900">
                 {isLoading ? (
                   <Skeleton className="h-full w-20 rounded-sm" />
-                ) : (
+                ) : path == "outfits" ? (
                   "2XL-XL-M-S"
+                ) : (
+                  "STANDART"
                 )}
               </span>
             </div>
