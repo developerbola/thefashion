@@ -11,7 +11,6 @@ import { cartAtom } from "@/lib/atoms";
 import { useAtom } from "jotai";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import Link from "next/link";
 
 const Cart = () => {
   const [cart, setCart] = useAtom(cartAtom);
@@ -25,6 +24,15 @@ const Cart = () => {
     setCart((prevCart) =>
       prevCart.filter((cartItem: ProductType) => cartItem.$id !== id)
     );
+  };
+
+  const handleCheckout = async () => {
+    const res = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      body: JSON.stringify(cart),
+    });
+    const { url } = await res.json();
+    window.location.href = url;
   };
 
   return (
@@ -139,11 +147,9 @@ const Cart = () => {
                 <span>Total:</span>
                 <span>${total}</span>
               </div>
-              <Link href="/checkout" className="w-full">
-                <Button className="w-full" size="lg">
-                  Continue to Checkout
-                </Button>
-              </Link>
+              <Button className="w-full" size="lg" onClick={handleCheckout}>
+                Continue to Checkout
+              </Button>
             </div>
           </SheetFooter>
         )}
