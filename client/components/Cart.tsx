@@ -43,7 +43,7 @@ const Cart = () => {
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
               <p className="text-lg">Your cart is empty</p>
-              <p className="text-sm">Add some great items to enjoy!</p>
+              <p className="text-sm">Add some great items to buy!</p>
             </div>
           ) : (
             <div className="space-y-1">
