@@ -41,6 +41,28 @@ const SingleProduct = ({
   const isLoading = !product;
   const [cart, setCart] = useAtom(cartAtom);
 
+  const buyOne = async () => {
+    if (!product) {
+      console.error("Product not loaded yet!");
+      return;
+    }
+
+    const res = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify([{ ...product, quantity }]),
+    });
+
+    const data = await res.json();
+
+    if (!data.url) {
+      console.error("No checkout URL returned:", data);
+      return;
+    }
+
+    window.location.href = data.url;
+  };
+
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4 md:p-10">
       <div className="max-w-6xl w-full bg-white grid md:grid-cols-2 overflow-hidden">
@@ -159,6 +181,7 @@ const SingleProduct = ({
             <Button
               className="w-full h-12 bg-black hover:bg-gray-800 text-white rounded-md text-md font-semibold tracking-wide"
               disabled={isLoading}
+              onClick={buyOne}
             >
               BUY NOW
             </Button>
