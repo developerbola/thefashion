@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: cart.map((item: any) => ({
+      line_items: cart.map((item: CartProductType) => ({
         price_data: {
           currency: "usd",
           product_data: { name: item.name, images: [item.imageUrl] },
@@ -23,10 +23,13 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ url: session.url });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Stripe error:", err);
     return NextResponse.json(
-      { error: err.message ?? "An unknown error occurred" },
+      {
+        error:
+          (err as { message?: string })?.message ?? "An unknown error occurred",
+      },
       { status: 500 }
     );
   }
