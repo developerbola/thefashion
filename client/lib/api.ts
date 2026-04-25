@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AxiosRequestConfig } from "axios";
 
-const baseURL = "http://localhost:8080/api";
+const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export async function api(method: string, path: string, data?: FormData) {
   const url = `${baseURL}${path}`;
