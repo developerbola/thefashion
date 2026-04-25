@@ -46,8 +46,8 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://appwrite.io" className="hover:underline">
-                    Appwrite
+                  <Link href="https://supabase.com" className="hover:underline">
+                    Supabase
                   </Link>
                 </li>
               </ul>

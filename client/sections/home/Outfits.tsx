@@ -79,7 +79,7 @@ export default function Outfits() {
               ))
             : outfits?.map((i) => (
                 <CarouselItem
-                  key={i.$id}
+                  key={i.id}
                   className="md:basis-1/2 lg:basis-1/3 pl-4"
                 >
                   <ProductCard item={i} key="outfits" />

@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AxiosRequestConfig } from "axios";
 
-const baseURL = "https://thefashion-s3cu.vercel.app/api";
+const baseURL = "http://localhost:8080/api";
 
 export async function api(method: string, path: string, data?: FormData) {
   const url = `${baseURL}${path}`;

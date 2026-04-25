@@ -86,9 +86,9 @@ const SingleProduct = ({
                   {product?.name}
                   {(() => {
                     const cartItem = cart.find(
-                      (item) => item.$id === product?.$id
+                      (item) => item.id === product?.id
                     );
-                    return cartItem ? ` [${cartItem.quantity} in cart]` : "";
+                    return cartItem ? ` [${cartItem.quantity}]` : "";
                   })()}
                 </>
               )}
@@ -190,7 +190,7 @@ const SingleProduct = ({
               disabled={isLoading}
               onClick={() => {
                 const existingIndex = cart.findIndex(
-                  (item) => item.$id === product?.$id
+                  (item) => item.id === product?.id
                 );
                 if (existingIndex !== -1 && product) {
                   setCart((prevCart) =>

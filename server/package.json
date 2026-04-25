@@ -1,11 +1,11 @@
 {
   "type": "module",
   "scripts": {
-    "serve": "bun run --hot /api/index.js"
+    "dev": "bun run --hot /api/index.js"
   },
   "dependencies": {
     "hono": "^4.9.6",
-    "node-appwrite": "^18.0.0"
+    "@supabase/supabase-js": "^2.39.0"
   },
   "devDependencies": {
     "dotenv": "^17.2.2"
