@@ -11,13 +11,13 @@ const app = new Hono().basePath("/api");
 useCors(app);
 useRoutes(app);
 
-// const handler = handle(app);
+const handler = handle(app);
 
-// export const GET = handler;
-// export const POST = handler;
-// export const PUT = handler;
-// export const DELETE = handler;
-// export const OPTIONS = handler;
+export const GET = handler;
+export const POST = handler;
+export const PUT = handler;
+export const DELETE = handler;
+export const OPTIONS = handler;
 export default {
   port: 8080,
   fetch: app.fetch,
