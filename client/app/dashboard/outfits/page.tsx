@@ -93,7 +93,7 @@ export default function OutfitsDashboard() {
               </TableRow>
             ) : (
               filtered.map((outfit, idx) => (
-                <TableRow key={outfit.$id}>
+                <TableRow key={outfit.id}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{outfit.name}</TableCell>
                   <TableCell>{outfit.brand}</TableCell>
@@ -106,7 +106,7 @@ export default function OutfitsDashboard() {
                   </TableCell>
                   <TableCell>${outfit.price.toLocaleString()}</TableCell>
                   <TableCell className="flex gap-2">
-                    <Delete path="outfits" id={outfit.$id} />
+                    <Delete path="outfits" id={outfit.id} />
                     <Edit product={outfit} path="outfits" />
                   </TableCell>
                 </TableRow>

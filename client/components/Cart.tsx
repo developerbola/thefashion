@@ -22,7 +22,7 @@ const Cart = () => {
 
   const handleRemove = (id: string) => {
     setCart((prevCart) =>
-      prevCart.filter((cartItem: ProductType) => cartItem.$id !== id)
+      prevCart.filter((cartItem: ProductType) => cartItem.id !== id)
     );
   };
 
@@ -60,7 +60,7 @@ const Cart = () => {
                 const increaseQuantity = () => {
                   setCart((prevCart) =>
                     prevCart.map((cartItem) =>
-                      cartItem.$id === item.$id
+                      cartItem.id === item.id
                         ? { ...cartItem, quantity: cartItem.quantity + 1 }
                         : cartItem
                     )
@@ -70,7 +70,7 @@ const Cart = () => {
                 const decreaseQuantity = () => {
                   setCart((prevCart) =>
                     prevCart.map((cartItem) =>
-                      cartItem.$id === item.$id && cartItem.quantity > 1
+                      cartItem.id === item.id && cartItem.quantity > 1
                         ? { ...cartItem, quantity: cartItem.quantity - 1 }
                         : cartItem
                     )
@@ -78,7 +78,7 @@ const Cart = () => {
                 };
                 return (
                   <div
-                    key={item.$id}
+                    key={item.id}
                     className="flex items-center justify-between p-4"
                   >
                     <div className="flex items-center space-x-4 flex-1">
@@ -128,7 +128,7 @@ const Cart = () => {
                         </Button>
                       </ButtonGroup>
                       <button
-                        onClick={() => handleRemove(item.$id)}
+                        onClick={() => handleRemove(item.id)}
                         className="text-red-500 underline underline-offset-4 decoration-1 cursor-pointer text-[13px] align-right"
                       >
                         remove

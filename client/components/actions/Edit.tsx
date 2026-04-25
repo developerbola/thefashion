@@ -52,7 +52,7 @@ const Edit = ({
     if (image) formData.append("image", image);
 
     try {
-      await api("put", `/${path}/${product.$id}`, formData);
+      await api("put", `/${path}/${product.id}`, formData);
       alert("Updated successfully!");
       setOpen(false);
     } catch (err) {

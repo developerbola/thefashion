@@ -89,7 +89,7 @@ export default function WatchesDashboard() {
               </TableRow>
             ) : (
               filtered.map((watch, idx) => (
-                <TableRow key={watch.$id}>
+                <TableRow key={watch.id}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{watch.name}</TableCell>
                   <TableCell>
@@ -101,7 +101,7 @@ export default function WatchesDashboard() {
                   </TableCell>
                   <TableCell>${watch.price.toLocaleString()}</TableCell>
                   <TableCell className="flex gap-2">
-                    <Delete path="watches" id={watch.$id} />
+                    <Delete path="watches" id={watch.id} />
                     <Edit product={watch} path="watches" />
                   </TableCell>
                 </TableRow>
